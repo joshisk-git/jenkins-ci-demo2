@@ -1,3 +1,3 @@
 #!/bin/bash
 echo "Running tests..."
-exit 0
+exit 1
