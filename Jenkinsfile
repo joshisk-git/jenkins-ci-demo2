@@ -4,9 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    credentialsId: 'github-pat',
-                    url: 'https://github.com/joshisk-git/jenkins-ci-demo2.git'
+                checkout scm
             }
         }
 
@@ -29,15 +27,14 @@ pipeline {
                 echo "Deployment done"
             }
         }
-    }
 
-    post {
-        success {
-		script {
-			if (env.BRANCH_NAME == 'main') {
-           		  archiveArtifacts artifacts: 'app.sh'
-			}
-		}
+        stage('Archive') {
+            when {
+                branch 'main'
+            }
+            steps {
+                archiveArtifacts artifacts: 'app.sh'
+            }
         }
     }
 }
