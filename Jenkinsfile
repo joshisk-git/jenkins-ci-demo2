@@ -33,7 +33,11 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts artifacts: 'app.sh'
+		script {
+			if (env.BRANCH_NAME == 'main') {
+           		  archiveArtifacts artifacts: 'app.sh'
+			}
+		}
         }
     }
 }
